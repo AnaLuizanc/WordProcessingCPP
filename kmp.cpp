@@ -21,9 +21,6 @@ vector<int> createTable(string pattern){
             j++;
     }
 
-    for(int i=0; i<table.size(); i++)
-        cout << table[i] << " ";
-
     return table;
 }
 
@@ -42,7 +39,7 @@ void kmp(string text, string pattern){
         else
             indexText++;
 
-        if(indexPattern == pattern.length()-1){
+        if(indexPattern == pattern.length()){
             cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
             indexPattern = table[indexPattern-1];
         }
@@ -51,7 +48,7 @@ void kmp(string text, string pattern){
 
 int main(){
 
-    kmp("ABABBABABA", "ABA");
+    kmp("abaaaba caba abcaabababc", "abc");
 
-    return 0;
+    return 0; 
 }
