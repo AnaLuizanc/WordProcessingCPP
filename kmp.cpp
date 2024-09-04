@@ -27,11 +27,13 @@ vector<int> createTable(string pattern){
     return table;
 }
 
-void kmp(string text, string pattern){
+vector<int> kmp(string text, string pattern){
     int indexText = 0;
     int indexPattern = 0;
     vector<int> table = createTable(pattern); 
     int counter = 0;
+
+    vector<int> positions;
 
     while(indexText < text.length()){
         if(text[indexText] == pattern[indexPattern]){
@@ -44,13 +46,98 @@ void kmp(string text, string pattern){
             indexText++;
 
         if(indexPattern == pattern.length()){
-            cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
+            //cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
+            positions.push_back(indexText-indexPattern);
             indexPattern = table[indexPattern-1];
             counter++;
         }
     }
 
-    cout << "\n\nPadrão encontrado " << counter << " vezes";
+    
+    //cout << "\n\nPadrão encontrado " << counter << " vezes";
+    
+    return positions;
+}
+
+void wildcardSearch(string bookString, string search){
+    string bookStringToSearch;
+    string searchToUpper;
+
+    for(int i = 0; i < bookString.size(); i++)
+        bookStringToSearch.push_back(toupper(bookString[i]));
+
+    if(search[0] == '*'){
+        string valueAfter;
+        for(int i = 1; i < search.size(); i++)
+            valueAfter.push_back(search[i]);
+        for(int i = 0; i < valueAfter.size(); i++)
+            searchToUpper.push_back(toupper(valueAfter[i]));
+
+        vector<int> positionsAfter = kmp(bookStringToSearch, searchToUpper);
+
+    
+        for(int i = 0; i < positionsAfter.size(); i++){
+        int j = 0;
+        int spaceCounter = 0;
+        while(spaceCounter != 2){
+            if(bookString[positionsAfter[i] - j] == ' ')
+                spaceCounter++;
+            j++;
+        }
+
+        int initialChar = positionsAfter[i] - j + 1;
+        cout << "' ";
+
+        int spaceInSearch = 0;        
+        for(int i = 0; i < search.size(); i++)
+            if(search[i] == ' ')
+                spaceInSearch++;
+
+        spaceCounter = 0;
+        for(int i = 0; spaceCounter != spaceInSearch + 2; i++){
+            cout << bookString[initialChar + i];
+            if(bookString[initialChar + i] == ' ')
+                spaceCounter++;
+        }
+        int initialCounter = positionsAfter[i];
+
+        cout << "' in position: " << positionsAfter[i];
+        cout << endl;
+    }
+
+
+
+    }
+    else if(search[search.size() - 1] == '*'){
+        string valueBefore;
+        int spaceCounterSearch = 0;
+        for(int i = 0; search[i] != '*'; i++){
+            valueBefore.push_back(search[i]);
+            if(search[i] == ' ')
+                spaceCounterSearch++;
+        }
+
+        string valueAfter;
+        for(int i = 0; i < valueBefore.size(); i++)
+            searchToUpper.push_back(toupper(valueBefore[i]));
+        
+        vector<int> positionsBefore = kmp(bookStringToSearch, searchToUpper);
+
+        for(int i = 0; i < positionsBefore.size(); i++){
+            int j = 0;
+            int spaceCounter = 0;
+            int initialCounter = positionsBefore[i];
+            cout << "' ";
+            while(j < 100 && spaceCounter != spaceCounterSearch + 1){
+                cout << bookString[positionsBefore[i] + j];
+                if(bookString[positionsBefore[i] + j] == ' ')
+                    spaceCounter++;
+                j++;
+            }
+            cout << "' in position: " << positionsBefore[i];
+            cout << endl;
+        }
+    }
 }
 
 int main(){
@@ -69,15 +156,9 @@ int main(){
 
     for(int i = 0; i < bookString.size(); i++)
         bookStringToSearch.push_back(toupper(bookString[i]));
-    
-    string search = "when she came of age. For centuries the Targaryens had married brother to sister";
-    string searchToUpper;
 
-    for(int i = 0; i < search.size(); i++)
-        searchToUpper.push_back(toupper(search[i]));
+    string search = "* the gods";
 
-
-
-    kmp(bookStringToSearch, searchToUpper);
+    wildcardSearch(bookString, search); 
     return 0; 
 }
