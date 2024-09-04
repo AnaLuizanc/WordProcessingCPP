@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -28,6 +31,7 @@ void kmp(string text, string pattern){
     int indexText = 0;
     int indexPattern = 0;
     vector<int> table = createTable(pattern); 
+    int counter = 0;
 
     while(indexText < text.length()){
         if(text[indexText] == pattern[indexPattern]){
@@ -42,13 +46,38 @@ void kmp(string text, string pattern){
         if(indexPattern == pattern.length()){
             cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
             indexPattern = table[indexPattern-1];
+            counter++;
         }
     }
+
+    cout << "\n\nPadrão encontrado " << counter << " vezes";
 }
 
 int main(){
+    ifstream bookFile("./GoT.txt");
 
-    kmp("abaaaba caba abcaabababc", "abc");
+    string bookString;
+    string bookStringToSearch;
+    string linha;
 
+
+    if(bookFile.is_open()){
+        while(getline(bookFile, linha)){
+            bookString.append(linha);
+        }
+    }
+
+    for(int i = 0; i < bookString.size(); i++)
+        bookStringToSearch.push_back(toupper(bookString[i]));
+    
+    string search = "when she came of age. For centuries the Targaryens had married brother to sister";
+    string searchToUpper;
+
+    for(int i = 0; i < search.size(); i++)
+        searchToUpper.push_back(toupper(search[i]));
+
+
+
+    kmp(bookStringToSearch, searchToUpper);
     return 0; 
 }
