@@ -30,8 +30,7 @@ vector<int> createTable(string pattern){
 vector<int> kmp(string text, string pattern){
     int indexText = 0;
     int indexPattern = 0;
-    vector<int> table = createTable(pattern); 
-    int counter = 0;
+    vector<int> table = createTable(pattern);
     vector<int> positions;
 
     while(indexText < text.length()){
@@ -48,11 +47,8 @@ vector<int> kmp(string text, string pattern){
             cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
             positions.push_back(indexText-indexPattern);
             indexPattern = table[indexPattern-1];
-            counter++;
         }
     }
-
-    cout << "\n\nPadrão encontrado " << counter << " vezes";
     return positions;
 }
 
@@ -70,7 +66,6 @@ int main(){
         }
     }
 
-
     for(int i = 0; i < bookString.size(); i++)
         bookStringToSearch.push_back(toupper(bookString[i]));
     
@@ -83,11 +78,20 @@ int main(){
 
     string search = "* water and";
     if(search[0] == '*'){
-        search = search.substr(2,search.length()-1);
+        search = search.substr(1,search.length()-1);
         vector<int> positions = kmp(bookString, search);
         for(int i=0; i<positions.size(); i++){
             int startString = positions[i];
-            while(bookString[startString] !=)
+            startString--;
+            while(bookString[startString-1] != ' ')
+                startString--;
+            
+            string concat;
+            while(startString < positions[i]){
+                concat += bookString[startString];
+                startString++;
+            }
+            cout << concat << search << endl;
         }
     }else{
         search.pop_back();
