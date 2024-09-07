@@ -46,7 +46,7 @@ vector<int> kmp(string text, string pattern){
             indexText++;
 
         if(indexPattern == pattern.length()){
-            //cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
+            cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
             positions.push_back(indexText-indexPattern);
             indexPattern = table[indexPattern-1];
             counter++;
@@ -104,38 +104,19 @@ void wildcardSearch(string bookString, string search){
         cout << "' in position: " << positionsAfter[i];
         cout << endl;
     }
-
-
-
     }
     else if(search[search.size() - 1] == '*'){
-        string valueBefore;
-        int spaceCounterSearch = 0;
-        for(int i = 0; search[i] != '*'; i++){
-            valueBefore.push_back(search[i]);
-            if(search[i] == ' ')
-                spaceCounterSearch++;
-        }
-
-        string valueAfter;
-        for(int i = 0; i < valueBefore.size(); i++)
-            searchToUpper.push_back(toupper(valueBefore[i]));
-        
-        vector<int> positionsBefore = kmp(bookStringToSearch, searchToUpper);
-
-        for(int i = 0; i < positionsBefore.size(); i++){
-            int j = 0;
-            int spaceCounter = 0;
-            int initialCounter = positionsBefore[i];
-            cout << "' ";
-            while(j < 100 && spaceCounter != spaceCounterSearch + 1){
-                cout << bookString[positionsBefore[i] + j];
-                if(bookString[positionsBefore[i] + j] == ' ')
-                    spaceCounter++;
-                j++;
+        search.pop_back();
+        vector<int> positions = kmp(bookString, search);
+        for(int i=0; i<positions.size(); i++){
+            int startString = positions[i] + search.length();
+            string concat;
+            while(bookString[startString] != ' '){
+                concat += bookString[startString];
+                startString++;
             }
-            cout << "' in position: " << positionsBefore[i];
-            cout << endl;
+            cout << "'" << search << concat << "' ";
+            cout << "in position: " << positions[i] << endl;
         }
     }
 }
@@ -157,7 +138,7 @@ int main(){
     for(int i = 0; i < bookString.size(); i++)
         bookStringToSearch.push_back(toupper(bookString[i]));
 
-    string search = "* the gods";
+    string search = "water and *";
 
     wildcardSearch(bookString, search); 
     return 0; 
