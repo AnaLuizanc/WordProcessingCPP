@@ -44,12 +44,93 @@ vector<int> kmp(string text, string pattern){
             indexText++;
 
         if(indexPattern == pattern.length()){
-            cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
+            //cout << "Padrão encontrado em: " << indexText-indexPattern << endl;
             positions.push_back(indexText-indexPattern);
             indexPattern = table[indexPattern-1];
         }
     }
     return positions;
+}
+
+void searchString(string bookString, string search, int words){
+    if(search[0] == '*' && search[search.length()-1] == '*'){
+        search = search.substr(1,search.length()-1);
+        search.pop_back();
+
+        vector<int> positions = kmp(bookString, search);
+        for(int i=0; i<positions.size(); i++){
+            int startStringBefore = positions[i];
+            startStringBefore--;
+            int wordsCounterBefore = words;
+
+            while(wordsCounterBefore > 0){
+                startStringBefore--;
+                if(bookString[startStringBefore-1] == ' ')
+                    wordsCounterBefore--;
+            }
+            
+            string concatBefore;
+            
+            while(startStringBefore < positions[i]){
+                concatBefore += bookString[startStringBefore];
+                startStringBefore++;
+            }
+            
+            int startStringAfter = positions[i] + search.length();
+            int wordsCounterAfter = words;
+            
+            string concatAfter;
+
+            while(wordsCounterAfter > 0){
+                concatAfter += bookString[startStringAfter];
+                startStringAfter++;
+                if(bookString[startStringAfter] == ' ')
+                    wordsCounterAfter--;
+            }
+
+            cout << concatBefore << search << concatAfter << endl;
+        }
+
+    }else if(search[0] == '*'){
+        search = search.substr(1,search.length()-1);
+        vector<int> positions = kmp(bookString, search);
+        for(int i=0; i<positions.size(); i++){
+            int startString = positions[i];
+            startString--;
+            int wordsCounter = words;
+            while(wordsCounter > 0){
+                startString--;
+                if(bookString[startString-1] == ' ')
+                    wordsCounter--;
+            }
+            
+            string concat;
+            while(startString < positions[i]){
+                concat += bookString[startString];
+                startString++;
+            }
+            
+            cout << "'" << concat << search << "' ";
+            cout << "in position: " << positions[i] << endl;
+        }
+    }else if(search[search.length()-1] == '*'){
+        search.pop_back();
+        
+        vector<int> positions = kmp(bookString, search);
+        for(int i=0; i<positions.size(); i++){
+            int startString = positions[i] + search.length();
+            string concat;
+            int wordsCounter = words;
+            while(wordsCounter > 0){
+                concat += bookString[startString];
+                startString++;
+                if(bookString[startString] == ' ')
+                    wordsCounter--;
+            }
+            cout << "'" << search << concat << "' ";
+            cout << "in position: " << positions[i] << endl;
+        }
+    }
 }
 
 int main(){
@@ -76,37 +157,14 @@ int main(){
         //searchToUpper.push_back(toupper(search[i]));
 
 
-    string search = "* water and";
-    if(search[0] == '*'){
-        search = search.substr(1,search.length()-1);
-        vector<int> positions = kmp(bookString, search);
-        for(int i=0; i<positions.size(); i++){
-            int startString = positions[i];
-            startString--;
-            while(bookString[startString-1] != ' ')
-                startString--;
-            
-            string concat;
-            while(startString < positions[i]){
-                concat += bookString[startString];
-                startString++;
-            }
-            cout << concat << search << endl;
-        }
-    }else{
-        search.pop_back();
-        vector<int> positions = kmp(bookString, search);
-        for(int i=0; i<positions.size(); i++){
-            int startString = positions[i] + search.length();
-            string concat;
-            while(bookString[startString] != ' '){
-                concat += bookString[startString];
-                startString++;
-            }
-            cout << "'" << search << concat << "' ";
-            cout << "in position: " << positions[i] << endl;
-        }
-    }
+    string search = "water and *";
+    
+    cout << "Deseja mostrar quantas palavras? ";
+    int words;
+    cin >> words;
 
+    cout << "STRING PROCURADA: " << search << endl;
+    searchString(bookString,search, words);
+    
     return 0; 
 }
