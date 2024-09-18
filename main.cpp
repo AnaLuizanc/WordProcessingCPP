@@ -43,7 +43,6 @@ int main(){
         switch(opcao){
             case 1:
             {
-                system("clear");
                 cin.ignore(); //limpa buffer
                 string search;
                 cout << "Digite string a ser procurada: ";
@@ -62,7 +61,6 @@ int main(){
             }
             case 2:
             {
-                system("clear");
                 cin.ignore(); //limpa buffer
                 string search;
                 cout << "Digite string a ser procurada: ";
@@ -83,7 +81,6 @@ int main(){
             }
             case 3:
             {
-                system("clear");
                 cin.ignore();
                 
                 int opcao2;
@@ -100,7 +97,7 @@ int main(){
                     cin >> opcao2;
 
                     if(opcao2 == 1){
-                        system("clear");
+                        
                         cin.ignore();
                         cout << "Digite texto: ";
                         getline(cin, text);
@@ -109,17 +106,16 @@ int main(){
 
                         encryptAndDecrypt(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols, text);
                     }else if(opcao2 == 2){
-                        system("clear");
+                        
                         text = "* Why hello there! It's a beautiful day, isn't it? The birds are singing and the flowers are blooming. What a perfect day to be alive! :) *";
 
                         cout << endl << "STRING: " << text << endl << endl;
 
                         encryptAndDecrypt(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols, text);
                     }else if(opcao2 == 3){
-                        system("clear");
+                        
                         translatedAlphabets(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols);
-                    }else if(opcao2 == 0)
-                        system("clear");
+                    }
                     else
                         cout << "Opção inválida!" << endl;
                 }while(opcao2 != 0);                
