@@ -59,7 +59,7 @@ vector<int> kmp(string text, string pattern){
     return positions;
 }
 
-void wildcardSearch(string bookString, string search){
+void wildcardSearch(string bookString, string search, int words){
     string bookStringToSearch;
     string searchToUpper;
 
@@ -138,7 +138,7 @@ int main(){
     for(int i = 0; i < bookString.size(); i++)
         bookStringToSearch.push_back(toupper(bookString[i]));
 
-    string search = "water and *";
+    string search = "* water and";
 
     wildcardSearch(bookString, search); 
     return 0; 
