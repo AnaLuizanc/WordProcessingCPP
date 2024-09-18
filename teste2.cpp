@@ -178,14 +178,11 @@ void encrypt(vector<char> alphabet, vector<int> newAlphabet, vector<char> alphab
             continue;
         }
 
-        /* cifra simbolos
         if(searchToEncrypt(alphabetSimbols, text[i]) != -1){
-            cout << endl << "aaaa" << endl;
             int position = searchToEncrypt(alphabetSimbols, text[i]);
             encrypted.push_back(alphabetSimbols[newAlphabetSimbols[position]]);
             continue;
         }
-        */
         
         int position = searchToEncrypt(alphabet, text[i]);
         encrypted.push_back(alphabet[newAlphabet[position]]);
@@ -199,14 +196,12 @@ void encrypt(vector<char> alphabet, vector<int> newAlphabet, vector<char> alphab
             continue;
         }
         
-        /* decifra simbolos
         if(searchToEncrypt(alphabetSimbols, encrypted[i]) != -1){
             int position = searchToEncrypt(alphabetSimbols, encrypted[i]);
             int pos2 = contains(newAlphabetSimbols, position);
             decrypted.push_back(alphabetSimbols[pos2]);
             continue;
         }
-        */
 
         int position = searchToEncrypt(alphabet, encrypted[i]);
         int pos2 = contains(newAlphabet, position);
@@ -257,11 +252,11 @@ int main(){
     vector<int> newAlphabetLetters = newAlphabetGenerate(alphabetLetters);
     vector<int> newAlphabetSimbols = newAlphabetGenerate(alphabetSimbols);
 
-    string text = "Dog";
+    string text = "Dog,.;";
 
     cout << endl << "STRING A SER CIFRADA: " << text << endl << endl;
 
-    encrypt(alphabetLetters,newAlphabetLetters,alphabetSimbols, newAlphabetLetters, text);
+    encrypt(alphabetLetters,newAlphabetLetters,alphabetSimbols, newAlphabetSimbols, text);
 
 
 
