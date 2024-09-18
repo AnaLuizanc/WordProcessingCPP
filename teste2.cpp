@@ -156,9 +156,6 @@ vector<int> newAlphabetGenerate(vector<char> alphabet){
             --i;
     }
 
-    //for(int i=0; i<newAlphabet.size(); i++)
-        //cout << newAlphabet[i] << " ";
-
     return newAlphabet;
 }
 
@@ -170,8 +167,12 @@ int searchToEncrypt(vector<char> alphabet, char elemento){
     return -1;
 }
 
-void encrypt(vector<char> alphabet, vector<int> newAlphabet, vector<char> alphabetSimbols, vector<int> newAlphabetSimbols, string text){
+void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, string text){
     string encrypted;
+    
+    vector<int> newAlphabet = newAlphabetGenerate(alphabet);
+    vector<int> newAlphabetSimbols = newAlphabetGenerate(alphabetSimbols);
+
     for(int i=0; i<text.length(); i++){
         if(text[i] == ' '){
             encrypted.push_back(' ');
@@ -249,16 +250,11 @@ int main(){
     vector<char> alphabetLetters = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
     vector<char> alphabetSimbols = {'"','!','(',')','/','?',',','.',':',';'};
 
-    vector<int> newAlphabetLetters = newAlphabetGenerate(alphabetLetters);
-    vector<int> newAlphabetSimbols = newAlphabetGenerate(alphabetSimbols);
-
-    string text = "Dog,.;";
+    string text = "Ci?ga,rettes After. Sex!";
 
     cout << endl << "STRING A SER CIFRADA: " << text << endl << endl;
 
-    encrypt(alphabetLetters,newAlphabetLetters,alphabetSimbols, newAlphabetSimbols, text);
-
-
+    encrypt(alphabetLetters, alphabetSimbols, text);
 
     return 0; 
 }
