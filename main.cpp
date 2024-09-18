@@ -107,14 +107,14 @@ int main(){
 
                         cout << endl << "STRING: " << text << endl << endl;
 
-                        encrypt(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols, text);
+                        encryptAndDecrypt(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols, text);
                     }else if(opcao2 == 2){
                         system("clear");
                         text = "* Why hello there! It's a beautiful day, isn't it? The birds are singing and the flowers are blooming. What a perfect day to be alive! :) *";
 
                         cout << endl << "STRING: " << text << endl << endl;
 
-                        encrypt(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols, text);
+                        encryptAndDecrypt(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols, text);
                     }else if(opcao2 == 3){
                         system("clear");
                         translatedAlphabets(alphabetLetters, alphabetSimbols, newAlphabet, newAlphabetSimbols);

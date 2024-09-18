@@ -1,5 +1,7 @@
 using namespace std;
 
+// Cria tabela do maior sufixo que também é prefixo.
+
 vector<int> createTable(string pattern){
     int len = pattern.length();
     vector<int> table(len,0);
@@ -20,6 +22,8 @@ vector<int> createTable(string pattern){
 
     return table;
 }
+
+// Executa KMP.
 
 vector<int> kmp(string text, string pattern){
     int indexText = 0;
@@ -44,6 +48,13 @@ vector<int> kmp(string text, string pattern){
     }
     return positions;
 }
+
+/**Procura string com *
+ * a procura pode ser feita das seguintes maneiras:
+ *    * searchString -> return : palavras + searchString
+ *    searchString * -> return : searchString + palavras
+ *    * searchString * -> return : palavras + searchString + palavras
+ * */ 
 
 void wildscoreSearch(string bookString, string search, int words){
     if(search[0] == '*' && search[search.length()-1] == '*'){
@@ -126,6 +137,7 @@ void wildscoreSearch(string bookString, string search, int words){
     }
 }
 
+// Verifica se o número gerado em newAlphabetGenerate já existe.
 
 int contains(vector<int> alphabet, int value){
     for(int i=0; i<alphabet.size(); i++){
@@ -134,6 +146,8 @@ int contains(vector<int> alphabet, int value){
     }
     return -1;
 }
+
+// Gera um novo alfabeto para cifra.
 
 vector<int> newAlphabetGenerate(vector<char> alphabet){
     vector<int> newAlphabet;
@@ -157,7 +171,9 @@ int searchToEncrypt(vector<char> alphabet, char elemento){
     return -1;
 }
 
-void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> newAlphabet, vector<int> newAlphabetSimbols, string text){
+// Faz a cifra e a quebra de cifra do texto.
+
+void encryptAndDecrypt(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> newAlphabet, vector<int> newAlphabetSimbols, string text){
     string encrypted;
 
     for(int i=0; i<text.length(); i++){
@@ -175,7 +191,7 @@ void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> ne
         int position = searchToEncrypt(alphabet, text[i]);
         encrypted.push_back(alphabet[newAlphabet[position]]);
     }
-    cout << "cifrada: "<< encrypted << endl;
+    cout << "Texto cifrado: " << encrypted << endl;
 
     string decrypted;
     for(int i=0; i<encrypted.length(); i++){
@@ -196,8 +212,10 @@ void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> ne
         decrypted.push_back(alphabet[pos2]);
     }
 
-    cout << endl << "decifrada: " << decrypted << endl;
+    cout << endl << "Texto decifrado: " << decrypted << endl;
 }
+
+// Mostra a tradução do novo alfabeto gerado.
 
 void translatedAlphabets(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> newAlphabet, vector<int> newAlphabetSimbols){
     cout << endl << "Tradução de letras: " << endl;
