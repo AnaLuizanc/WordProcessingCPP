@@ -77,7 +77,7 @@ int main(){
                 cin >> words;
 
                 cout << endl << "STRING PROCURADA: " << searchToUpper << endl << endl;
-                searchString(bookStringToSearch,searchToUpper, words);
+                wildscoreSearch(bookStringToSearch,searchToUpper, words);
 
                 break;
             }

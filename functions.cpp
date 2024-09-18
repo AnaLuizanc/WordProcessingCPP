@@ -45,7 +45,7 @@ vector<int> kmp(string text, string pattern){
     return positions;
 }
 
-void searchString(string bookString, string search, int words){
+void wildscoreSearch(string bookString, string search, int words){
     if(search[0] == '*' && search[search.length()-1] == '*'){
         search = search.substr(1,search.length()-1);
         search.pop_back();
