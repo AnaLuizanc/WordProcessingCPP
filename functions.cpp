@@ -157,11 +157,8 @@ int searchToEncrypt(vector<char> alphabet, char elemento){
     return -1;
 }
 
-void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, string text){
+void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> newAlphabet, vector<int> newAlphabetSimbols, string text){
     string encrypted;
-    
-    vector<int> newAlphabet = newAlphabetGenerate(alphabet);
-    vector<int> newAlphabetSimbols = newAlphabetGenerate(alphabetSimbols);
 
     for(int i=0; i<text.length(); i++){
         if(text[i] == ' '){
@@ -199,5 +196,16 @@ void encrypt(vector<char> alphabet, vector<char> alphabetSimbols, string text){
         decrypted.push_back(alphabet[pos2]);
     }
 
-    cout << "decifrada: " << decrypted << endl;
+    cout << endl << "decifrada: " << decrypted << endl;
+}
+
+void translatedAlphabets(vector<char> alphabet, vector<char> alphabetSimbols, vector<int> newAlphabet, vector<int> newAlphabetSimbols){
+    cout << endl << "Tradução de letras: " << endl;
+    for (int i = 0; i < alphabet.size(); i++)
+        cout << alphabet[i] << "  ----->  " << alphabet[newAlphabet[i]] << endl;
+    
+    cout << "Tradução de símbolos: " << endl;
+    for(int i=0; i < alphabetSimbols.size(); i++)
+        cout << alphabetSimbols[i] << "  ----->  " << alphabetSimbols[newAlphabetSimbols[i]] << endl;
+
 }
