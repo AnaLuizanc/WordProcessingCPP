@@ -137,12 +137,12 @@ void searchString(string bookString, string search, int words){
 }
 
 
-bool contains(vector<int> v, int value){
-    for(int i=0; i<v.size(); i++){
-        if(v[i] == value)
-            return true;
+int contains(vector<int> alphabet, int value){
+    for(int i=0; i<alphabet.size(); i++){
+        if(alphabet[i] == value)
+            return i;
     }
-    return false;
+    return -1;
 }
 
 vector<int> newAlphabetGenerate(vector<char> alphabet){
@@ -150,13 +150,11 @@ vector<int> newAlphabetGenerate(vector<char> alphabet){
     srand(time(NULL));
     for(int i=0; i<alphabet.size(); i++){
         int number = rand()%alphabet.size();
-        if(!contains(newAlphabet, number)){
+        if(contains(newAlphabet, number) == -1){
             newAlphabet.push_back(number);
         }else
             --i;
     }
-
-    //cout << newAlphabet.size() << endl << endl;
 
     //for(int i=0; i<newAlphabet.size(); i++)
         //cout << newAlphabet[i] << " ";
@@ -172,22 +170,6 @@ int searchToEncrypt(vector<char> alphabet, char elemento){
     return -1;
 }
 
-int searchToDecrypt(vector<int> alphabet, int position){
-    for(int i=0; i<alphabet.size(); i++){
-        if(alphabet[i] == position)
-            return i;
-    }
-    return -1;
-}
-
-int containsSimbols(vector<char> v, char c){
-    for(int i=0; i<v.size(); i++){
-        if(v[i] == c)
-            return i;
-    }
-    return -1;
-}
-
 void encrypt(vector<char> alphabet, vector<int> newAlphabet, vector<char> alphabetSimbols, vector<int> newAlphabetSimbols, string text){
     string encrypted;
     for(int i=0; i<text.length(); i++){
@@ -197,7 +179,7 @@ void encrypt(vector<char> alphabet, vector<int> newAlphabet, vector<char> alphab
         }
 
         /* cifra simbolos
-        if(containsSimbols(alphabetSimbols, text[i]) != -1){
+        if(searchToEncrypt(alphabetSimbols, text[i]) != -1){
             cout << endl << "aaaa" << endl;
             int position = searchToEncrypt(alphabetSimbols, text[i]);
             encrypted.push_back(alphabetSimbols[newAlphabetSimbols[position]]);
@@ -218,16 +200,16 @@ void encrypt(vector<char> alphabet, vector<int> newAlphabet, vector<char> alphab
         }
         
         /* decifra simbolos
-        if(containsSimbols(alphabetSimbols, encrypted[i]) != -1){
+        if(searchToEncrypt(alphabetSimbols, encrypted[i]) != -1){
             int position = searchToEncrypt(alphabetSimbols, encrypted[i]);
-            int pos2 = searchToDecrypt(newAlphabetSimbols, position);
+            int pos2 = contains(newAlphabetSimbols, position);
             decrypted.push_back(alphabetSimbols[pos2]);
             continue;
         }
         */
 
         int position = searchToEncrypt(alphabet, encrypted[i]);
-        int pos2 = searchToDecrypt(newAlphabet, position);
+        int pos2 = contains(newAlphabet, position);
         decrypted.push_back(alphabet[pos2]);
     }
 
@@ -274,11 +256,6 @@ int main(){
 
     vector<int> newAlphabetLetters = newAlphabetGenerate(alphabetLetters);
     vector<int> newAlphabetSimbols = newAlphabetGenerate(alphabetSimbols);
-
-    for(int i=0; i<newAlphabetSimbols.size(); i++)
-        cout << newAlphabetSimbols[i] << " ";
-
-    cout << endl;
 
     string text = "Dog";
 
